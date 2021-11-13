@@ -1,14 +1,8 @@
-
 import 'package:device_info/device_info.dart';
 
-enum BuildMode {
-  debug,
-  profile,
-  release
-}
+enum BuildMode { debug, profile, release }
 
 class DeviceUtils {
-
   static BuildMode currentBuildMode() {
     if (const bool.fromEnvironment('dart.vm.product')) {
       return BuildMode.release;
@@ -22,6 +16,7 @@ class DeviceUtils {
     }());
     return result;
   }
+
   /// Method to get android device information on which app is running
   static Future<AndroidDeviceInfo> androidDeviceInfo() async {
     var plugin = DeviceInfoPlugin();
@@ -33,5 +28,4 @@ class DeviceUtils {
     var plugin = DeviceInfoPlugin();
     return plugin.iosInfo;
   }
-
 }

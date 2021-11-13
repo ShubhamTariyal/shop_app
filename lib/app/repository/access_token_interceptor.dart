@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 class AccessTokenInterceptor extends Interceptor {
   Dio dioClient;
@@ -8,9 +9,9 @@ class AccessTokenInterceptor extends Interceptor {
 
   @override
   Future onError(
-      DioError error, ErrorInterceptorHandler errorInterceptorHandler) async {
+      DioError err, ErrorInterceptorHandler handler) async {
     try {
-      if (_shouldRetry(error)) {
+      if (_shouldRetry(err)) {
         // var options = error.response!.requestOptions;
 
         // If no token, request token firstly and lock this interceptor
@@ -50,7 +51,7 @@ class AccessTokenInterceptor extends Interceptor {
           dioClient.interceptors.requestLock.unlock();
           // tokens are updated, hit request again
 
-          print('Error while RefreshingTokenForGraphApi: ${error.toString()}');
+          debugPrint('Error while RefreshingTokenForGraphApi: ${err.toString()}');
           ///Handle exception
 
           // if (exception is DioError) {
@@ -62,20 +63,20 @@ class AccessTokenInterceptor extends Interceptor {
           //   }
           //   errorInterceptorHandler.next(exception);
           // } else {
-            errorInterceptorHandler.next(error);
+            handler.next(err);
           // }
         }
       } else {
-        errorInterceptorHandler.next(error);
+        handler.next(err);
       }
-    } on Exception catch (e) {
-      print(e);
+    } on Exception catch (exception) {
+      debugPrint(exception.toString());
     }
   }
 
   @override
   void onRequest(RequestOptions options,
-      RequestInterceptorHandler requestInterceptorHandler) async {
+      RequestInterceptorHandler handler) async {
     ///Add required handling
     // if (_isHeaderTokenEmpty(options.headers[Constants.authHeaderKey])) {
     //
@@ -87,8 +88,8 @@ class AccessTokenInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response,
-      ResponseInterceptorHandler responseInterceptorHandler) async {
-    responseInterceptorHandler.next(response);
+      ResponseInterceptorHandler handler) async {
+    handler.next(response);
   }
 
   // bool _isHeaderTokenEmpty(String header) {

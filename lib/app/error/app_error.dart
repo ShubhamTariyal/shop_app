@@ -17,14 +17,18 @@ class AppError {
   Error? _error;
   ErrorModel? _errorModel;
 
+  Exception? get exception => _exception;
+
+  Error? get error => _error;
+
+  DioError? get dioError => _dioError;
+
   AppErrorType get appErrorType =>
       _appErrorType ?? AppErrorType.unknownHandlingError;
   String get errorCode => _errorCode ?? kApiUnknownError;
   int get apiCode => _apiCode ?? kApiUnknownErrorCode;
 
-
-  AppError.withApiException(ExceptionHandler? error,
-      {String? displayMessage}) {
+  AppError.withApiException(ExceptionHandler? error, {String? displayMessage}) {
     if (error != null &&
         error.getErrorModel() != null &&
         error.getErrorModel()!.errorMessageKey.hasValidData()) {

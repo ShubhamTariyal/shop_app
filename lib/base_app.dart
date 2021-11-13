@@ -4,13 +4,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:logging/logging.dart';
 
 import 'core_utils/log_util.dart';
 import 'resources/strings/app_localization_delegate.dart';
 import 'resources/strings/app_translations.dart';
 import 'services/config/flavor_banner.dart';
-import 'services/config/flavor_config.dart';
 
 void baseAppSetup() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,14 +17,14 @@ void baseAppSetup() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   // Status bar
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarBrightness: Brightness.light));
 
   // Run the application under run zoned, to catch unhandled exceptions
-  await runZonedGuarded<Future<Null>>(() async {
+  await runZonedGuarded<Future<void>>(() async {
     LogUtil().printLog(message: 'Showing main');
-    runApp(_App());
+    runApp(const _App());
   }, (error, stackTrace) async {
     // Whenever an error occurs, call the `reportCrash` function. This will send
     // Dart errors to our dev console or Crashlytics depending on the environment.
@@ -36,15 +34,15 @@ void baseAppSetup() async {
   });
 }
 
-void _configureLogger() {
-  Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen((LogRecord rec) {
-    if (FlavorConfig.instance.isDebug) {
-      print(
-          '[${rec.level.name}][${rec.time}][${rec.loggerName}]: ${rec.message}');
-    }
-  });
-}
+// void _configureLogger() {
+//   Logger.root.level = Level.ALL;
+//   Logger.root.onRecord.listen((LogRecord rec) {
+//     if (FlavorConfig.instance.isDebug) {
+//       debugPrint(
+//           '[${rec.level.name}][${rec.time}][${rec.loggerName}]: ${rec.message}');
+//     }
+//   });
+// }
 
 class _AppProviders extends StatelessWidget {
   final Widget child;
@@ -76,7 +74,7 @@ class _App extends StatelessWidget {
         home: FlavorBanner(
           showBanner: kDebugMode,
           ///Put your HomePage widget here
-          child: Scaffold(
+          child: const Scaffold(
             body: SafeArea(
               child: Center(
                 child: Text('Hello World'),
@@ -87,13 +85,13 @@ class _App extends StatelessWidget {
         navigatorKey: mainNavigatorKey,
         debugShowCheckedModeBanner: false,
         // routes: Routes.routes,
-        supportedLocales: [
+        supportedLocales: const [
           Locale(Translations.kLanguageEnglish),
           Locale(Translations.kLanguageArabic),
         ],
-        localizationsDelegates: [
+        localizationsDelegates: const [
           // A class which loads the translations
-          const ApplicationLocalizationDelegate(),
+          ApplicationLocalizationDelegate(),
           // Built-in localization of basic text for Material widgets
           GlobalMaterialLocalizations.delegate,
           // Built-in localization for text direction LTR/RTL

@@ -37,7 +37,7 @@ PageRouteBuilder customNavigation({
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => page!,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      var begin = isHorizontalDirection ? Offset(1.0, 0.0) : Offset(0.0, -1.0);
+      var begin = isHorizontalDirection ? const Offset(1.0, 0.0) : const Offset(0.0, -1.0);
       const end = Offset.zero;
       const curve = Curves.decelerate;
       var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
@@ -58,7 +58,7 @@ PageRouteBuilder electronicFlowNavigation({
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => page!,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      var begin = isHorizontalDirection ? Offset(0.0, 0.0) : Offset(0.0, 0.0);
+      var begin = isHorizontalDirection ? const Offset(0.0, 0.0) : const Offset(0.0, 0.0);
       const end = Offset.zero;
       const curve = Curves.linear;
       var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));

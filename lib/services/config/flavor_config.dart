@@ -18,7 +18,7 @@ class FlavorConfig {
   final String name;
   final Color color;
   final FlavorValues flavorValues;
-  final bool isDebug = bool.fromEnvironment('dart.vm.product') == false;
+  final bool isDebug = const bool.fromEnvironment('dart.vm.product') == false;
 
   static FlavorConfig? _instance;
 

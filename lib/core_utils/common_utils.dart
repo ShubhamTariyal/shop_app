@@ -128,7 +128,7 @@ String getFormattedCurrency(String? price) {
     NumberFormat('#,##,###.##').format(double.parse(price));
     return formattedAmount;
   } on Exception catch (exception) {
-    print(exception);
+    debugPrint(exception.toString());
     return price;
   }
 }

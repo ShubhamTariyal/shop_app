@@ -7,7 +7,7 @@ class LogUtil {
   /// Holds instances of logger to send log messages to the [LogPrinter].
   final Logger _logger = Logger();
 
-  static final JsonEncoder _prettyJsonEncoder = JsonEncoder.withIndent('  ');
+  static const JsonEncoder _prettyJsonEncoder = JsonEncoder.withIndent('  ');
 
   factory LogUtil() {
     return LogUtil._internal();
@@ -17,7 +17,7 @@ class LogUtil {
 
   void printLog({String tag = '!@#', String message = ''}) {
     if (!kReleaseMode) {
-      print('$tag: $message');
+      debugPrint('$tag: $message');
     }
   }
 
@@ -67,7 +67,7 @@ class LogUtil {
     if (!kReleaseMode) {
       final pattern = RegExp('.{1,800}'); //Setting 800 as size of each chunk
       pattern.allMatches(message).forEach((element) {
-        print(element.group(0));
+        debugPrint(element.group(0));
       });
     }
   }

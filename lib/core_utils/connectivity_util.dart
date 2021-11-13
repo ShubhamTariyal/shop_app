@@ -46,7 +46,7 @@ class ConnectionStatusSingleton {
     var previousConnection = hasConnection;
 
     try {
-      final result = await InternetAddress.lookup('google.com').timeout(Duration(seconds: 10));
+      final result = await InternetAddress.lookup('google.com').timeout(const Duration(seconds: 10));
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         hasConnection = true;
       } else {

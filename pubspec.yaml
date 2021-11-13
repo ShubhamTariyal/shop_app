@@ -69,7 +69,8 @@ dependencies:
 #  google_sign_in: ^5.0.4
 #  flutter_facebook_login: ^3.0.0
 #  connectivity: ^3.0.6
-#  carousel_slider: ^3.0.0
+
+  flutter_lints: ^1.0.4
 
 dev_dependencies:
   flutter_test:

@@ -9,7 +9,8 @@ class FlavorBanner extends StatelessWidget {
   BannerConfig? bannerConfig;
   bool showBanner = false;
 
-  FlavorBanner({required this.child, this.showBanner = false});
+  FlavorBanner({required this.child, this.showBanner = false, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,29 +28,29 @@ class FlavorBanner extends StatelessWidget {
   }
 
   BannerConfig _getDefaultBanner() => BannerConfig(
-        bannerName: FlavorConfig.instance.name,
-        bannerColor: FlavorConfig.instance.color);
+      bannerName: FlavorConfig.instance.name,
+      bannerColor: FlavorConfig.instance.color);
 
   Widget _buildBanner(BuildContext context) => GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      child: Container(
-        width: 50,
-        height: 50,
-        child: CustomPaint(
-          painter: BannerPainter(
-              message: bannerConfig?.bannerName ?? 'def',
-              textDirection: Directionality.of(context),
-              layoutDirection: Directionality.of(context),
-              location: BannerLocation.topStart,
-              color: bannerConfig?.bannerColor ?? Colors.red),
+        behavior: HitTestBehavior.translucent,
+        child: SizedBox(
+          width: 50,
+          height: 50,
+          child: CustomPaint(
+            painter: BannerPainter(
+                message: bannerConfig?.bannerName ?? 'def',
+                textDirection: Directionality.of(context),
+                layoutDirection: Directionality.of(context),
+                location: BannerLocation.topStart,
+                color: bannerConfig?.bannerColor ?? Colors.red),
+          ),
         ),
-      ),
-      onLongPress: () {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) => DeviceInfoDialog());
-      },
-    );
+        onLongPress: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) => const DeviceInfoDialog());
+        },
+      );
 }
 
 class BannerConfig {
